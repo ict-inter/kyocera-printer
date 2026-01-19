@@ -29,7 +29,8 @@ function InstallDriver {
     try {
         if (-not (Get-PrinterDriver -Name $DriverName -ErrorAction SilentlyContinue)) {
             Write-Log "Installing printer driver $DriverName from INF..."
-            Add-PrinterDriver -Name $DriverName -InfPath "$DriverPath\$DriverInf"
+            pnputil /add-driver "$DriverPath\$DriverInf" /install
+            Add-PrinterDriver -Name $DriverName
             Write-Log "Driver installed successfully."
         } else {
             Write-Log "Driver $DriverName already installed."
